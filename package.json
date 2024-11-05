@@ -1,0 +1,35 @@
+{
+  "name": "@nrd/fua.app.logger",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "fua.app.logger": "./src/launch.js",
+    "fua.app.logger.healthcheck": "./src/script/healthcheck.js"
+  },
+  "files": [
+    "src/*"
+  ],
+  "dependencies": {
+    "express": "^4.17.1",
+    "@nrd/fua.core.is": "^1.0.7",
+    "@nrd/fua.core.ts": "^1.0.3",
+    "@nrd/fua.agent.app": "^1.0.4",
+    "@nrd/fua.service.ui": "^1.0.4"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "expect": "^26.6.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/launch.js",
+    "healthcheck": "node src/script/healthcheck.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git02.int.nsc.ag:10022/research/fua/app/logger.git"
+  },
+  "keywords": [],
+  "author": "spetrac@nicos-ag.com",
+  "license": "UNLICENSED"
+}
