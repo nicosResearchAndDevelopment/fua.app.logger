@@ -7,6 +7,11 @@ const
 
 module.exports = async function ({server: {app, io}, connector, ...config}) {
 
+    app.set('case sensitive routing', true);
+    app.set('query parser', false);
+    app.set('strict routing', true);
+    app.set('x-powered-by', false);
+
     app.get('/', (request, response) => response.redirect('/view'));
 
     app.use('/view', ui({
@@ -17,12 +22,12 @@ module.exports = async function ({server: {app, io}, connector, ...config}) {
 
     app.use('/log', express.text(), function (request, response) {
         io.to('view').emit('log-request', {
-            timestamp:   ts.dateTime(),
-            method:      request.method,
-            url:         request.url,
-            httpVersion: request.httpVersion,
-            headers:     request.headers,
-            body:        is.string(request.body) ? request.body : null
+            timestamp: ts.dateTime(),
+            version:   request.httpVersion,
+            method:    request.method,
+            url:       request.originalUrl,
+            headers:   request.headers,
+            body:      is.string(request.body) ? request.body : null
         });
         response.format({
             'text/plain':       () => response.status(200).send('OK'),
