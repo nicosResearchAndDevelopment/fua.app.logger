@@ -2,16 +2,18 @@ import {is, assert, props, create} from "./lib/core.mjs";
 import GUI from './lib/gui.mjs';
 
 const default_config = {
-    backgroundColor: "#eee",
-    textColor:       "#555",
-    borderColor:     "#aaa",
-    gridGap:         "8px",
-    fontSize:        "14px",
-    minWidth:        "200px",
-    urlColor:        "#a00",
-    versionColor:    "#0aa",
-    timestampColor:  "#aaa",
-    maxEntries:      100
+    backgroundColor:   "#eee",
+    connectedColor:    "#dec",
+    disconnectedColor: "#edd",
+    textColor:         "#555",
+    borderColor:       "#aaa",
+    gridGap:           "8px",
+    fontSize:          "14px",
+    minWidth:          "200px",
+    urlColor:          "#a00",
+    versionColor:      "#0aa",
+    timestampColor:    "#aaa",
+    maxEntries:        100
 };
 
 const timestampFormat = new Intl.DateTimeFormat(undefined, {
@@ -43,14 +45,16 @@ export default class RequestLog extends GUI {
                 "padding":               config.gridGap,
                 "grid-template-columns": "100%",
                 "align-content":         "start",
-                "overflow-wrap":         "break-word",
                 "font-family":           "monospace",
                 "font-size":             config.fontSize,
-                "line-height":           "1.3em"
+                "line-height":           "1.3em",
+                "overflow-wrap":         "break-word",
+                "white-space":           "pre-wrap"
             },
             "> .request-log":                 {
-                "padding": config.gridGap,
-                "border":  "1px solid " + config.borderColor
+                "padding":          config.gridGap,
+                "background-color": config.backgroundColor,
+                "border":           "1px solid " + config.borderColor
             },
             "> .request-log .timestamp":      {
                 "color":         config.timestampColor,
@@ -75,11 +79,12 @@ export default class RequestLog extends GUI {
                 "font-weight": "bold"
             },
             "> .request-log .body":           {
-                "margin-top":    "1em"
+                "margin-top": "1em"
             }
         });
 
         this.data.entries = [];
+        this.data.lastPos = 0;
 
     }
 
@@ -105,7 +110,8 @@ export default class RequestLog extends GUI {
         const logEntry = create.htmlElement('div', null, 'request-log');
 
         const entryTimestamp     = logEntry.appendChild(create.htmlElement('div', null, 'timestamp'));
-        entryTimestamp.innerText = timestampFormat.format(new Date(request.timestamp))
+        entryTimestamp.innerText = '#' + (++this.data.lastPos).toLocaleString() + ': '
+            + timestampFormat.format(new Date(request.timestamp));
 
         const entryTitle = logEntry.appendChild(create.htmlElement('div', null, 'title'));
 
@@ -149,6 +155,21 @@ export default class RequestLog extends GUI {
         }
 
         return this
+    }
+
+    /**
+     * @param {boolean | null} isConnected
+     * @returns {this}
+     */
+    setConnected(isConnected) {
+        if (isConnected === null) {
+            this.container.style.backgroundColor = this.config.backgroundColor;
+        } else if (isConnected) {
+            this.container.style.backgroundColor = this.config.connectedColor;
+        } else {
+            this.container.style.backgroundColor = this.config.disconnectedColor;
+        }
+        return this;
     }
 
 }

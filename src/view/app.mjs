@@ -14,6 +14,9 @@ layout.defineLayout(
 
 socket.on('connect', () => {
     socket.emit('subscribe', 'view');
+    requestLog.setConnected(true);
 }).on('log-request', (request) => {
     requestLog.addRequest(request);
+}).on('disconnect', () => {
+    requestLog.setConnected(false);
 });
