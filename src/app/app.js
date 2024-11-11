@@ -20,14 +20,14 @@ module.exports = async function ({server: {app, io}, connector, ...config}) {
         res: {pattern: '/nicos-rd/*'}
     }), express.static(path.join(__dirname, '../view')));
 
-    app.use('/log', express.text(), function (request, response) {
+    app.use('/log', express.text({type: '*/*'}), function (request, response) {
         io.to('view').emit('log-request', {
             timestamp: ts.dateTime(),
             version:   request.httpVersion,
             method:    request.method,
             url:       request.originalUrl,
             headers:   request.headers,
-            body:      is.string(request.body) ? request.body : null
+            body:      request.body || null
         });
         response.format({
             'text/plain':       () => response.status(200).send('OK'),
