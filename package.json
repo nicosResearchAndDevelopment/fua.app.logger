@@ -1,5 +1,5 @@
 {
-  "name": "@nrd/fua.app.logger",
+  "name": "@fua/app.logger",
   "version": "1.0.2",
   "description": "",
   "bin": {
@@ -11,25 +11,29 @@
   ],
   "dependencies": {
     "express": "^4.21.1",
-    "@nrd/fua.core.is": "^1.0.7",
-    "@nrd/fua.core.ts": "^1.0.3",
-    "@nrd/fua.agent.app": "^1.0.4",
-    "@nrd/fua.service.ui": "^1.0.4"
+    "@fua/core.is": "^1.0.7",
+    "@fua/core.ts": "^1.0.3",
+    "@fua/agent.app": "^1.0.4",
+    "@fua/service.ui": "^1.0.4"
   },
   "devDependencies": {
-    "mocha": "^10.2.0",
-    "expect": "^26.6.2"
+    "expect": "26.x",
+    "mocha": "10.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node src/launch.js",
     "healthcheck": "node src/script/healthcheck.js"
   },
+  "mocha": {
+    "bail": false,
+    "recursive": false,
+    "spec": "test/*.test.js"
+  },
   "repository": {
     "type": "git",
-    "url": "ssh://git@git02.int.nsc.ag:10022/research/fua/app/logger.git"
+    "url": "ssh://git@github.com:nicosResearchAndDevelopment/fua.app.logger.git"
   },
-  "keywords": [],
-  "author": "spetrac@nicos-ag.com",
-  "license": "UNLICENSED"
+  "author": "Simon Petrac <pfoerdie@gmail.com>",
+  "license": "MIT"
 }

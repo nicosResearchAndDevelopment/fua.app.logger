@@ -1,9 +1,9 @@
 const
-    is      = require('@nrd/fua.core.is'),
-    ts      = require('@nrd/fua.core.ts'),
+    is      = require('@fua/core.is'),
+    ts      = require('@fua/core.ts'),
     path    = require('path'),
     express = require('express'),
-    ui      = require('@nrd/fua.service.ui');
+    ui      = require('@fua/service.ui');
 
 module.exports = async function ({server: {app, io}, connector, ...config}) {
 

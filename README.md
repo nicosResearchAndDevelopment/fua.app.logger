@@ -1,1 +1,1 @@
-# @nrd/fua.app.logger
+# @fua/app.logger

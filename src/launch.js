@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const App = require('@nrd/fua.agent.app');
+const App = require('@fua/agent.app');
 
 App.launch({
     app:    require('./app/app.js'),
